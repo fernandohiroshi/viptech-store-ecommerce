@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ModeToggle from "./mode-toggle";
 
-function Header() {
+const Header = () => {
   return (
     <header className="w-full border-b">
       <div className="wrapper flex-between">
