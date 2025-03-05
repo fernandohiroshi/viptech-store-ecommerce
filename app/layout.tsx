@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
-import { Raleway } from "next/font/google";
+import { Inter } from "next/font/google";
 import "@/assets/styles/globals.css";
 import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from "@/lib/constants";
 
-const fontRaleway = Raleway({
+const I = Inter({
   subsets: ["latin"],
 });
 
@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${fontRaleway.className}  antialiased`}>
+      <body className={`${I.className}  antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
