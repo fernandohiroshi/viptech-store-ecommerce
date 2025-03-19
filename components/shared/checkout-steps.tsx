@@ -9,15 +9,14 @@ const CheckoutSteps = ({ current = 0 }) => {
           <React.Fragment key={step}>
             <div
               className={cn(
-                "p-2 w-56 rounded-full text-center text-sm",
-                index === current ? "bg-secondary" : ""
+                "rounded-full text-center text-sm",
+                index === current ? "text-cyan-500 animate-pulse" : ""
               )}
             >
               {step}
             </div>
-
             {step !== "Place Order" && (
-              <hr className="w-16 border-t border-gray-300 mx-2" />
+              <hr className="w-full border-t border-gray-300 mx-2" />
             )}
           </React.Fragment>
         )
