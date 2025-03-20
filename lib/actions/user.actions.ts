@@ -3,7 +3,7 @@
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import {
   paymentMethodSchema,
-  shippingAddresSchema,
+  shippingAddressSchema,
   signInFormSchema,
   signUpFormSchema,
 } from "../validators";
@@ -11,7 +11,7 @@ import { auth, signIn, signOut } from "@/auth";
 import { hashSync } from "bcrypt-ts-edge";
 import { prisma } from "@/db/prisma";
 import { formatError } from "../utils";
-import { ShippingAdress } from "@/types";
+import { ShippingAddress } from "@/types";
 import { z } from "zod";
 
 // Sign in the user with credentials
@@ -89,7 +89,7 @@ export async function getUserById(userId: string) {
 }
 
 // Update users address
-export async function updateUserAddress(data: ShippingAdress) {
+export async function updateUserAddress(data: ShippingAddress) {
   try {
     const session = await auth();
 
@@ -99,7 +99,7 @@ export async function updateUserAddress(data: ShippingAdress) {
 
     if (!currentUser) throw new Error("User not found");
 
-    const address = shippingAddresSchema.parse(data);
+    const address = shippingAddressSchema.parse(data);
 
     await prisma.user.update({
       where: { id: currentUser.id },

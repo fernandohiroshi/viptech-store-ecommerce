@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
-import { ShippingAdress } from "@/types";
-import { shippingAddresSchema } from "@/lib/validators";
+import { ShippingAddress } from "@/types";
+import { shippingAddressSchema } from "@/lib/validators";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ControllerRenderProps, useForm, SubmitHandler } from "react-hook-form";
@@ -22,17 +22,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Loader } from "lucide-react";
 import { updateUserAddress } from "@/lib/actions/user.actions";
 
-const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
+const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof shippingAddresSchema>>({
-    resolver: zodResolver(shippingAddresSchema),
+  const form = useForm<z.infer<typeof shippingAddressSchema>>({
+    resolver: zodResolver(shippingAddressSchema),
     defaultValues: address || shippingAddresDefaultValues,
   });
 
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit: SubmitHandler<z.infer<typeof shippingAddresSchema>> = async (
+  const onSubmit: SubmitHandler<z.infer<typeof shippingAddressSchema>> = async (
     values
   ) => {
     startTransition(async () => {
@@ -52,7 +52,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
       <div className="max-w-md mx-auto space-y-4">
         <h1 className="h2-bold mt-4">Shipping Address</h1>
         <p className="text-sm text-muted-foreground">
-          Please enter and address to ship to
+          Please enter an address to ship to.
         </p>
         <Form {...form}>
           <form
@@ -68,7 +68,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
                   field,
                 }: {
                   field: ControllerRenderProps<
-                    z.infer<typeof shippingAddresSchema>,
+                    z.infer<typeof shippingAddressSchema>,
                     "fullName"
                   >;
                 }) => (
@@ -91,7 +91,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
                   field,
                 }: {
                   field: ControllerRenderProps<
-                    z.infer<typeof shippingAddresSchema>,
+                    z.infer<typeof shippingAddressSchema>,
                     "streetAddress"
                   >;
                 }) => (
@@ -114,7 +114,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
                   field,
                 }: {
                   field: ControllerRenderProps<
-                    z.infer<typeof shippingAddresSchema>,
+                    z.infer<typeof shippingAddressSchema>,
                     "city"
                   >;
                 }) => (
@@ -137,7 +137,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
                   field,
                 }: {
                   field: ControllerRenderProps<
-                    z.infer<typeof shippingAddresSchema>,
+                    z.infer<typeof shippingAddressSchema>,
                     "postalCode"
                   >;
                 }) => (
@@ -160,7 +160,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
                   field,
                 }: {
                   field: ControllerRenderProps<
-                    z.infer<typeof shippingAddresSchema>,
+                    z.infer<typeof shippingAddressSchema>,
                     "country"
                   >;
                 }) => (
@@ -176,13 +176,17 @@ const ShippingAddressForm = ({ address }: { address: ShippingAdress }) => {
               />
             </div>
             <div className="flex gap-2">
-              <Button type="submit" disabled={isPending}>
+              <Button
+                type="submit"
+                disabled={isPending}
+                aria-label="Continue to payment"
+              >
                 {isPending ? (
                   <Loader className="w-4 h-4 animate-spin" />
                 ) : (
                   <ArrowRight className="w-4 h-4" />
                 )}{" "}
-                Continue
+                Proceed to Payment
               </Button>
             </div>
           </form>
