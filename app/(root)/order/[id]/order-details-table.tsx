@@ -14,9 +14,26 @@ import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
 import { Order } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
+import {
+  PayPalButtons,
+  PayPalScriptProvider,
+  usePayPalScriptReducer,
+} from "@paypal/react-paypal-js";
+import {
+  createPayPalOrder,
+  approvePayPalOrder,
+} from "@/lib/actions/order.actions";
+import { toast } from "sonner";
 
-const OrderDetailsTable = ({ order }: { order: Order }) => {
+const OrderDetailsTable = ({
+  order,
+  paypalClientId,
+}: {
+  order: Order;
+  paypalClientId: string;
+}) => {
   const {
+    id,
     shippingAddress,
     orderitems,
     itemsPrice,
@@ -29,9 +46,43 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
     paidAt,
     deliveredAt,
   } = order;
+
+  const PrintLoadingState = () => {
+    const [{ isPending, isRejected }] = usePayPalScriptReducer();
+    let status = "";
+
+    if (isPending) {
+      status = "Loading PayPal...";
+    } else if (isRejected) {
+      status = "Error Loading PayPal";
+    }
+    return status;
+  };
+
+  const handleCreatePayPalOrder = async () => {
+    const res = await createPayPalOrder(order.id);
+
+    if (!res.success) {
+      toast.error(res.message);
+      return;
+    }
+
+    return res.data;
+  };
+
+  const handleApprovePayPalOrder = async (data: { orderID: string }) => {
+    const res = await approvePayPalOrder(order.id, data);
+
+    if (res.success) {
+      toast.message(res.message);
+    } else {
+      toast.error(res.message);
+    }
+  };
+
   return (
     <>
-      <h1 className="py-4 text-2xl">Order {formatId(order.id)}</h1>
+      <h1 className="py-4 text-2xl">Order {formatId(id)}</h1>
       <div className="grid md:grid-cols-3 md:gap-5">
         <div className="col-span-2 space-y-4 overflow-x-auto">
           {/* PAYMENT */}
@@ -55,7 +106,7 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
               <h2 className="text-xl pb-4">Shipping Address</h2>
               <p>{shippingAddress.fullName}</p>
               <p className="mb-2">
-                {shippingAddress.streetAddress}, {shippingAddress.city}
+                {shippingAddress.streetAddress}, {shippingAddress.city},{" "}
                 {shippingAddress.postalCode}, {shippingAddress.country}
               </p>
               {isDelivered ? (
@@ -133,6 +184,18 @@ const OrderDetailsTable = ({ order }: { order: Order }) => {
                 <div>Total</div>
                 <div>{formatCurrency(totalPrice)}</div>
               </div>
+              {/*---------- PAYPAL PAYMENT ----------*/}
+              {!isPaid && paymentMethod === "PayPal" && (
+                <div>
+                  <PayPalScriptProvider options={{ clientId: paypalClientId }}>
+                    <PrintLoadingState />
+                    <PayPalButtons
+                      createOrder={handleCreatePayPalOrder}
+                      onApprove={handleApprovePayPalOrder}
+                    />
+                  </PayPalScriptProvider>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
