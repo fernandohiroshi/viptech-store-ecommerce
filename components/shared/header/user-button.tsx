@@ -46,11 +46,28 @@ const UserButton = async () => {
                 {session.user?.name}
               </div>
 
-              <div className="text-sm text-muted-foreground leading-none">
+              <div
+                className="text-sm text-muted-foreground leading-none truncate max-w-[200px] cursor-zoom-in"
+                title={session.user?.email ?? undefined}
+              >
                 {session.user?.email}
               </div>
             </div>
           </DropdownMenuLabel>
+
+          {/* Profile */}
+          <DropdownMenuItem>
+            <Link href="/user/profile" className="w-full">
+              User Profile
+            </Link>
+          </DropdownMenuItem>
+          {/* Orders */}
+          <DropdownMenuItem>
+            <Link href="/user/orders" className="w-full">
+              Order History
+            </Link>
+          </DropdownMenuItem>
+
           <DropdownMenuItem className="p-0 mb-1">
             <form action={signOutUser} className="w-full">
               <Button
