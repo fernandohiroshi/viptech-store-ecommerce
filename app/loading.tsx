@@ -12,7 +12,7 @@ const LoadingPage = () => {
         width: "100vw",
       }}
     >
-      <Image src={loader} height={240} width={240} alt="Loading ..." />
+      <Image src={loader} height={300} width={300} alt="Loading ..." />
     </div>
   );
 };
