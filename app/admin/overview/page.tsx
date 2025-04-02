@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { auth } from "@/auth";
+import { requireAdmin } from "@/lib/auth-guard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 };
 
 const AdminOverviewPage = async () => {
+  await requireAdmin();
   const session = await auth();
 
   if (session?.user?.role !== "admin") {
@@ -135,11 +137,9 @@ const AdminOverviewPage = async () => {
 
                     {/* Details */}
                     <TableCell>
-                      <Link href={`/order/${order.id}`}>
-                        <Button variant="link" className="px-2">
-                          Details
-                        </Button>
-                      </Link>
+                      <Button variant="link" className="px-2">
+                        <Link href={`/order/${order.id}`}>Details</Link>
+                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}
