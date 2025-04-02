@@ -61,7 +61,7 @@ const OrdersPage = async (props: {
                     : "Not Delivered"}
                 </TableCell>
                 <TableCell>
-                  <Button asChild variant="link" size="sm">
+                  <Button asChild variant="outline" size="sm">
                     <Link href={`/order/${order.id}`}>Details</Link>
                   </Button>
                 </TableCell>
