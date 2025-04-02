@@ -137,7 +137,7 @@ const AdminOverviewPage = async () => {
 
                     {/* Details */}
                     <TableCell>
-                      <Button variant="link" className="px-2">
+                      <Button variant="link" className="px-2" asChild>
                         <Link href={`/order/${order.id}`}>Details</Link>
                       </Button>
                     </TableCell>

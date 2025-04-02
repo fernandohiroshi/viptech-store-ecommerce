@@ -1,7 +1,6 @@
-import { Metadata } from "next";
-import { getMyOrders } from "@/lib/actions/order.actions";
-import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
-import Link from "next/link";
+import { auth } from "@/auth";
+import Pagination from "@/components/shared/pagination";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -10,20 +9,27 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import Pagination from "@/components/shared/pagination";
+import { getAllOrders } from "@/lib/actions/order.actions";
+import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
+import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "My Orders",
+  title: "Admin Orders",
 };
 
-const OrdersPage = async (props: {
+const AdminOrdersPage = async (props: {
   searchParams: Promise<{ page: string }>;
 }) => {
-  const { page } = await props.searchParams;
+  const { page = "1" } = await props.searchParams;
 
-  const orders = await getMyOrders({
-    page: Number(page) || 1,
+  const session = await auth();
+
+  if (session?.user?.role !== "admin")
+    throw new Error("User is not authorized");
+
+  const orders = await getAllOrders({
+    page: Number(page),
   });
 
   return (
@@ -81,4 +87,4 @@ const OrdersPage = async (props: {
   );
 };
 
-export default OrdersPage;
+export default AdminOrdersPage;

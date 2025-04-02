@@ -13,7 +13,7 @@ const Unauthorized = () => {
       <p className="text-muted-foreground">
         You do not have permission to access this page
       </p>
-      <Button>
+      <Button asChild>
         <Link href="/">Return Home</Link>
       </Button>
     </div>
