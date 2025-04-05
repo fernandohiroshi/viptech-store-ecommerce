@@ -6,7 +6,7 @@ import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import slugify from "slugify";
 import { useRouter } from "next/navigation";
-import { ControllerRenderProps, useForm } from "react-hook-form";
+import { ControllerRenderProps, SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import {
   Form,
@@ -19,6 +19,8 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { createProduct, updateProduct } from "@/lib/actions/product.actions";
+import { toast } from "sonner";
 
 const ProductForm = ({
   type,
@@ -38,9 +40,47 @@ const ProductForm = ({
     defaultValues:
       product && type === "Update" ? product : productDefaultValues,
   });
+
+  const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
+    values
+  ) => {
+    // On Create
+    if (type === "Create") {
+      const res = await createProduct(values);
+
+      if (!res.success) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+        router.push("/admin/products");
+      }
+    }
+
+    // On Update
+    if (type === "Update") {
+      if (!productId) {
+        router.push("/admin/products");
+        return;
+      }
+
+      const res = await updateProduct({ ...values, id: productId });
+
+      if (!res.success) {
+        toast.error(res.message);
+      } else {
+        toast.success(res.message);
+        router.push("/admin/products");
+      }
+    }
+  };
+
   return (
     <Form {...form}>
-      <form action="" className="space-y-8">
+      <form
+        method="POST"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8"
+      >
         <div className="flex flex-col md:flex-row gap-5">
           {/* Name */}
           <FormField
@@ -232,7 +272,7 @@ const ProductForm = ({
             disabled={form.formState.isSubmitting}
             className="button col-span-2 w-full"
           >
-            {form.formState.isSubmitting ? "Submitting" : `${type} Product`}
+            {form.formState.isSubmitting ? "Submitting..." : `${type} Product`}
           </Button>
         </div>
       </form>
