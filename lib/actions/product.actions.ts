@@ -50,6 +50,9 @@ export async function getAllProducts({
     skip: (page - 1) * limit,
     take: limit,
   });
+  // After need delete this console.logs
+  console.log(query)
+  console.log(category)
 
   const dataCount = await prisma.product.count();
 
