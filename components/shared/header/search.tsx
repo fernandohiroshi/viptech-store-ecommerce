@@ -13,7 +13,7 @@ import { SearchIcon } from "lucide-react";
 const Search = async () => {
   const categories = await getAllCategories();
   return (
-    <form action="/search" method="POST">
+    <form action="/search" method="GET">
       <div className="flex w-full max-w-sm items-center space-x-2">
         <Select name="category">
           <SelectTrigger className="w-[180px]">
