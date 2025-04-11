@@ -3,6 +3,7 @@
 import { Review } from "@prisma/client";
 import Link from "next/link";
 import { useState } from "react";
+import ReviewForm from "./review-form";
 
 const ReviewList = ({
   userId,
@@ -13,6 +14,7 @@ const ReviewList = ({
   productId: string;
   productSlug: string;
 }) => {
+  // After delete console
   console.log(productId);
   const [reviews, setReviews] = useState<Review[]>([]);
 
@@ -20,7 +22,7 @@ const ReviewList = ({
     <div className="space-y-4">
       {reviews.length === 0 && <div>No reviews yet</div>}
       {userId ? (
-        <>{/* Review Form */}</>
+        <ReviewForm userId={userId} productId={productId} />
       ) : (
         <div>
           Please
