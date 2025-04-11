@@ -14,15 +14,23 @@ const ReviewList = ({
   productId: string;
   productSlug: string;
 }) => {
-  // After delete console
-  console.log(productId);
   const [reviews, setReviews] = useState<Review[]>([]);
+  //Delete after this console:
+  console.log(setReviews);
+
+  const reload = () => {
+    console.log("Review Submitted");
+  };
 
   return (
     <div className="space-y-4">
       {reviews.length === 0 && <div>No reviews yet</div>}
       {userId ? (
-        <ReviewForm userId={userId} productId={productId} />
+        <ReviewForm
+          userId={userId}
+          productId={productId}
+          onReviewSubmitted={reload}
+        />
       ) : (
         <div>
           Please
