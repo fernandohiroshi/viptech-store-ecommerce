@@ -68,6 +68,6 @@ const ModeToggle = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
 
 export default ModeToggle;
