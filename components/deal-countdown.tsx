@@ -96,7 +96,7 @@ const DealCountdown = () => {
           Get ready for a shopping experience like never before with our Deals
           of the Month! Every purchase comes with exclusive perks and offers,
           making this month a celebration of savvy choices and amazing deals.
-          Don&apos;t miss out! 🛒🎁
+          Don&apos;t miss out! 🎁
         </p>
         <ul className="grid grid-cols-4">
           <StatBox label="Days" value={time.days} />
@@ -112,10 +112,11 @@ const DealCountdown = () => {
       </div>
       <div className="flex justify-center">
         <Image
-          src="/images/promo.jpg"
+          src="/images/Igneous-Lagoon.png"
           alt="promotion"
           width={300}
           height={200}
+          className="shadow-2xl"
         />
       </div>
     </section>

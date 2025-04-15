@@ -16,21 +16,18 @@ const sampleData = {
 
   products: [
     {
-      name: "Polo Sporting Stretch Shirt",
-      slug: "polo-sporting-stretch-shirt",
-      category: "Men's Dress Shirts",
-      description: "Classic Polo style with modern comfort",
-      images: [
-        "/images/sample-products/p1-1.jpg",
-        "/images/sample-products/p1-2.jpg",
-      ],
-      price: 59.99,
-      brand: "Polo",
-      rating: 4.5,
-      numReviews: 10,
-      stock: 5,
+      name: "",
+      slug: "",
+      category: "",
+      description: "",
+      images: ["", ""],
+      price: 0,
+      brand: "",
+      rating: 0,
+      numReviews: 0,
+      stock: 0,
       isFeatured: true,
-      banner: "banner-1.jpg",
+      banner: "",
     },
   ],
 };
