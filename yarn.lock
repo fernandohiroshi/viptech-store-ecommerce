@@ -2594,11 +2594,6 @@ base64id@2.0.0, base64id@~2.0.0:
   resolved "https://registry.yarnpkg.com/base64id/-/base64id-2.0.0.tgz#2770ac6bc47d312af97a8bf9a634342e0cd25cb6"
   integrity sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==
 
-bcrypt-ts-edge@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/bcrypt-ts-edge/-/bcrypt-ts-edge-3.0.1.tgz#015364990970fcb11fe55d8aacf48f390af9b89e"
-  integrity sha512-Gq0tyh6qfnFF1ojObSJo0RpZ8Pkm1HTqiLRsaMjeQOWDpIhfa2OURLx2UDcvT9EiUo9apfVk6zZDD+WpwF72fg==
-
 bl@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/bl/-/bl-4.1.0.tgz#451535264182bec2fbbc83a62ab98cf11d9f7b3a"
