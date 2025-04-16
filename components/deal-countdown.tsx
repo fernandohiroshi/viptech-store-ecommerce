@@ -78,7 +78,7 @@ const DealCountdown = () => {
         </div>
         <div className="flex justify-center">
           <Image
-            src="/images/promo.jpg"
+            src="/images/promo.webp"
             alt="promotion"
             width={300}
             height={200}
@@ -91,12 +91,12 @@ const DealCountdown = () => {
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 my-20">
       <div className="flex flex-col gap-2 justify-center">
-        <h3 className="text-3xl font-bold">Deal Of The Month</h3>
+        <h3 className="text-3xl font-bold">Limited-Time Offer</h3>
         <p>
-          Get ready for a shopping experience like never before with our Deals
-          of the Month! Every purchase comes with exclusive perks and offers,
-          making this month a celebration of savvy choices and amazing deals.
-          Don&apos;t miss out! 🎁
+          Get ready for a shopping experience like never before with our
+          limited-time deals! Enjoy exclusive perks and special discounts
+          available for a short period only. Don&apos;t miss your chance to save
+          big and shop smart! 🚀
         </p>
         <ul className="grid grid-cols-4">
           <StatBox label="Days" value={time.days} />
@@ -106,17 +106,18 @@ const DealCountdown = () => {
         </ul>
         <div className="text-end">
           <Button asChild>
-            <Link href="/search">View Products</Link>
+            <Link href="/search?category=Limited+Promotion&q=">
+              View Products
+            </Link>
           </Button>
         </div>
       </div>
       <div className="flex justify-center">
         <Image
-          src="/images/Igneous-Lagoon.png"
+          src="/images/promo.webp"
           alt="promotion"
-          width={300}
+          width={360}
           height={200}
-          className="shadow-2xl"
         />
       </div>
     </section>

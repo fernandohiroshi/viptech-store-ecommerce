@@ -11,17 +11,16 @@ const Header = () => {
       <div className="wrapper flex-between">
         <div className="flex-start">
           <CategoryDrawer />
-          <Link href="/" className="flex-start ml-4">
+          <Link href="/" className="flex-start ml-2">
             <Image
               src="/images/logo.png"
               alt={`${APP_NAME}`}
-              height={48}
-              width={48}
+              height={40}
+              width={40}
               priority={true}
+              className="hover:scale-110 duration-500 ease-in-out opacity-90 hover:brightness-110"
             />
-            <span className="hidden lg:block font-bold text-2xl ml-3">
-              {APP_NAME}
-            </span>
+            <span className="font-bold text-xl md:text-2xl ml-2">VTstore</span>
           </Link>
         </div>
         <div className="hidden md:block">
