@@ -5,7 +5,6 @@ import Link from "next/link";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
@@ -26,7 +25,6 @@ const Menu = async () => {
     );
   }
 
-  const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "U";
   return (
     <div className="flex justify-end gap-3">
       <nav className="hidden md:flex w-full max-w-xs gap-1">
