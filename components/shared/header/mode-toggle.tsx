@@ -30,7 +30,7 @@ const ModeToggle = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           className="focus-visible:right-0 focus-visible:ring-offset-0"
         >
           {theme === "system" ? (

@@ -9,8 +9,8 @@ const AdminSearch = () => {
   const formActionUrl = pathname.includes("/admin/orders")
     ? "/admin/orders"
     : pathname.includes("/admin/users")
-    ? "/admin/users"
-    : "/admin/products";
+      ? "/admin/users"
+      : "/admin/products";
 
   const searchParams = useSearchParams();
   const [queryValue, setQueryValue] = useState(searchParams.get("query") || "");
@@ -27,7 +27,7 @@ const AdminSearch = () => {
         name="query"
         value={queryValue}
         onChange={(e) => setQueryValue(e.target.value)}
-        className="md:w-[100px] lg:w-[300px]"
+        className="hidden md:flex md:w-[100px] lg:w-[300px]"
       />
       <button className="sr-only" type="submit">
         Search

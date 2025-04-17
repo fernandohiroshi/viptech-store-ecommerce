@@ -90,7 +90,7 @@ const AdminOverviewPage = async () => {
         </Card>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
         {/* Overview */}
         <Card className="col-span-4">
           <CardHeader>
@@ -107,7 +107,7 @@ const AdminOverviewPage = async () => {
         </Card>
 
         {/* Recent Sales */}
-        <Card className="col-span-3">
+        <Card className="col-span-4 md:grid-cols-3">
           <CardHeader>
             <CardTitle>Recent Sales</CardTitle>
           </CardHeader>

@@ -1,5 +1,7 @@
 import ProductCard from "@/components/shared/product/product-card";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 import {
   getAllProducts,
   getAllCategories,
@@ -126,32 +128,38 @@ const SearchPage = async (props: {
 
   return (
     <div className="grid md:grid-cols-5 md:gap-5">
-      <div className="filter-links">
+      <div className="filter-links ">
         {/* Categories Links */}
         <div className="text-xl mb-2 mt-3">Department</div>
         <div>
-          <ul className="space-y-1">
-            <li>
+          <ScrollArea className="h-48 md:h-72 w-full rounded-md border overflow-y-auto">
+            <div className="p-2">
               <Link
-                className={`${
+                className={`block text-sm mb-2 ${
                   (category === "all" || category === "") && "font-bold"
                 }`}
                 href={getFilterUrl({ c: "all" })}
               >
                 Any
               </Link>
-            </li>
-            {categories.map((x) => (
-              <li key={x.category}>
-                <Link
-                  className={`${category === x.category && "font-bold"}`}
-                  href={getFilterUrl({ c: x.category })}
-                >
-                  {x.category}
-                </Link>
-              </li>
-            ))}
-          </ul>
+              <Separator className="mb-2" />
+              {categories.map((x, index) => (
+                <div key={x.category}>
+                  <Link
+                    className={`block text-sm mb-2 ${
+                      category === x.category && "font-bold"
+                    }`}
+                    href={getFilterUrl({ c: x.category })}
+                  >
+                    {x.category}
+                  </Link>
+                  {index < categories.length - 1 && (
+                    <Separator className="mb-2" />
+                  )}
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
         </div>
 
         {/* Price Links */}

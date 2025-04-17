@@ -4,11 +4,10 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-// Static target date (replace with desired date)
 const TARGET_DATE = new Date("2025-06-20T00:00:00");
 
-// Function to calculate the time remaining
 const calculateTimeRemaining = (targetDate: Date) => {
   const currentTime = new Date();
   const timeDifference = Math.max(Number(targetDate) - Number(currentTime), 0);
@@ -26,7 +25,6 @@ const DealCountdown = () => {
   const [time, setTime] = useState<ReturnType<typeof calculateTimeRemaining>>();
 
   useEffect(() => {
-    // Calculate initial time on client
     setTime(calculateTimeRemaining(TARGET_DATE));
 
     const timerInterval = setInterval(() => {
@@ -45,6 +43,20 @@ const DealCountdown = () => {
       return () => clearInterval(timerInterval);
     }, 1000);
   }, []);
+
+  const FloatingImage = (
+    <motion.div
+      className="flex justify-center"
+      animate={{ y: [0, -20, 0] }}
+      transition={{
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    >
+      <Image src="/images/promo.png" alt="promotion" width={400} height={300} />
+    </motion.div>
+  );
 
   if (!time) {
     return (
@@ -76,14 +88,7 @@ const DealCountdown = () => {
             </Button>
           </div>
         </div>
-        <div className="flex justify-center">
-          <Image
-            src="/images/promo.webp"
-            alt="promotion"
-            width={300}
-            height={200}
-          />
-        </div>
+        {FloatingImage}
       </section>
     );
   }
@@ -92,19 +97,19 @@ const DealCountdown = () => {
     <section className="grid grid-cols-1 md:grid-cols-2 my-20">
       <div className="flex flex-col gap-2 justify-center">
         <h3 className="text-3xl font-bold">Limited-Time Offer</h3>
-        <p>
+        <p className="text-sm md:text-base">
           Get ready for a shopping experience like never before with our
           limited-time deals! Enjoy exclusive perks and special discounts
           available for a short period only. Don&apos;t miss your chance to save
           big and shop smart! 🚀
         </p>
-        <ul className="grid grid-cols-4">
+        <ul className="grid grid-cols-2 md:grid-cols-4">
           <StatBox label="Days" value={time.days} />
           <StatBox label="Hours" value={time.hours} />
           <StatBox label="Minutes" value={time.minutes} />
           <StatBox label="Seconds" value={time.seconds} />
         </ul>
-        <div className="text-end">
+        <div className="text-end mb-20 md:mb-0">
           <Button asChild>
             <Link href="/search?category=Limited+Promotion&q=">
               View Products
@@ -112,14 +117,7 @@ const DealCountdown = () => {
           </Button>
         </div>
       </div>
-      <div className="flex justify-center">
-        <Image
-          src="/images/promo.webp"
-          alt="promotion"
-          width={360}
-          height={200}
-        />
-      </div>
+      {FloatingImage}
     </section>
   );
 };
