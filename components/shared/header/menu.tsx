@@ -4,6 +4,7 @@ import { EllipsisVertical, ShoppingCart, UserIcon } from "lucide-react";
 import Link from "next/link";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger,
@@ -38,6 +39,7 @@ const Menu = async () => {
         <UserButton />
       </nav>
 
+      {/* MOBILE */}
       <nav className="md:hidden">
         <Sheet>
           <SheetTrigger className="align-middle">
@@ -60,14 +62,18 @@ const Menu = async () => {
             </div>
 
             {/* Profile */}
-            <Link href="/user/profile" className="w-full">
-              User Profile
-            </Link>
+            <SheetClose asChild>
+              <Link href="/user/profile" className="w-full">
+                User Profile
+              </Link>
+            </SheetClose>
 
             {/* Orders */}
-            <Link href="/user/orders" className="w-full">
-              Order History
-            </Link>
+            <SheetClose asChild>
+              <Link href="/user/orders" className="w-full">
+                Order History
+              </Link>
+            </SheetClose>
 
             {/* Admin Overview */}
             {session?.user?.role === "admin" && (
@@ -76,11 +82,13 @@ const Menu = async () => {
               </Link>
             )}
 
-            <Button asChild variant="outline">
-              <Link href="/cart">
-                <ShoppingCart /> Cart
-              </Link>
-            </Button>
+            <SheetClose asChild>
+              <Button asChild variant="outline">
+                <Link href="/cart">
+                  <ShoppingCart /> Cart
+                </Link>
+              </Button>
+            </SheetClose>
             <ModeToggle />
 
             <form action={signOutUser} className="w-full">

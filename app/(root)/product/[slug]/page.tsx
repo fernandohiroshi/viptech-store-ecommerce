@@ -44,7 +44,7 @@ const ProductDetailsPage = async (props: {
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                 <ProductPrice
                   value={Number(product.price)}
-                  className="w-24 rounded-full bg-emerald-100 text-emerald-800 px-5 py-2"
+                  className="w-28 text-center rounded-full bg-emerald-100 text-emerald-800 p-2"
                 />
               </div>
             </div>
@@ -56,15 +56,15 @@ const ProductDetailsPage = async (props: {
           {/* ACTION COLUMN */}
           <div>
             <Card>
-              <CardContent>
-                <div className="mb-2 flex justify-between">
+              <CardContent className="p-2 lg:px-4">
+                <div className="mb-2 flex flex-col lg:flex-row justify-between">
                   <div>Price</div>
                   <div>
                     <ProductPrice value={Number(product.price)} />
                   </div>
                 </div>
-                <div className="mb-2 flex justify-between">
-                  <div>Status</div>
+                <div className="mb-2 flex flex-col lg:flex-row justify-between">
+                  <div className="mr-2">Status</div>
                   {product.stock > 0 ? (
                     <Badge variant="outline">In Stock</Badge>
                   ) : (
