@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "VIPTech Store",
     images: [
       {
-        url: `${SERVER_URL}images/doc1.png`,
+        url: "https://viptech.store/images/doc1.png",
         width: 1200,
         height: 630,
         alt: "VIPTech Store - Full-Stack E-commerce Project",
