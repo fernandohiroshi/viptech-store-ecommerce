@@ -1,34 +1,35 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { signUpUser } from "@/lib/actions/user.actions";
-import { signUpDefaultValues } from "@/lib/constants";
+import Link from "next/link"
+import { useSearchParams } from "next/navigation"
+import { useActionState } from "react"
+import { useFormStatus } from "react-dom"
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+import { signUpUser } from "@/lib/actions/user.actions"
+import { signUpDefaultValues } from "@/lib/constants"
 
 const SignUpForm = () => {
   const [data, action] = useActionState(signUpUser, {
     success: false,
     message: "",
-  });
+  })
 
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get("callbackUrl") || "/"
 
   const SignUpButton = () => {
-    const { pending } = useFormStatus();
+    const { pending } = useFormStatus()
 
     return (
       <Button disabled={pending} className="w-full" variant="default">
         {pending ? "Submitting..." : "Sign Up"}
       </Button>
-    );
-  };
+    )
+  }
 
   return (
     <form action={action}>
@@ -81,10 +82,10 @@ const SignUpForm = () => {
         </div>
 
         {data && !data.success && (
-          <div className="text-center text-destructive">{data.message}</div>
+          <div className="text-destructive text-center">{data.message}</div>
         )}
 
-        <div className="text-sm text-center text-muted-foreground">
+        <div className="text-muted-foreground text-center text-sm">
           Already have an account?{" "}
           <Link href="/sign-in" target="_self" className="link">
             Sign In
@@ -92,7 +93,7 @@ const SignUpForm = () => {
         </div>
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

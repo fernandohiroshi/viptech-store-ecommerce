@@ -1,24 +1,26 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useSession } from "next-auth/react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
+
+import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { updateProfile } from "@/lib/actions/user.actions";
-import { updateProfileSchema } from "@/lib/validators";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { z } from "zod";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+
+import { updateProfile } from "@/lib/actions/user.actions"
+import { updateProfileSchema } from "@/lib/validators"
 
 const ProfileForm = () => {
-  const { data: session, update } = useSession();
+  const { data: session, update } = useSession()
 
   const form = useForm<z.infer<typeof updateProfileSchema>>({
     resolver: zodResolver(updateProfileSchema),
@@ -26,14 +28,14 @@ const ProfileForm = () => {
       name: session?.user?.name ?? "",
       email: session?.user?.email ?? "",
     },
-  });
+  })
 
   const onSubmit = async (values: z.infer<typeof updateProfileSchema>) => {
-    const res = await updateProfile(values);
+    const res = await updateProfile(values)
 
     if (!res.success) {
-      toast.error(res.message);
-      return;
+      toast.error(res.message)
+      return
     }
 
     const newSession = {
@@ -42,11 +44,11 @@ const ProfileForm = () => {
         ...session?.user,
         name: values.name,
       },
-    };
+    }
 
-    await update(newSession);
-    toast.message(res.message);
-  };
+    await update(newSession)
+    toast.message(res.message)
+  }
 
   return (
     <Form {...form}>
@@ -101,7 +103,7 @@ const ProfileForm = () => {
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default ProfileForm;
+export default ProfileForm

@@ -30,6 +30,6 @@ const sampleData = {
       banner: "",
     },
   ],
-};
+}
 
-export default sampleData;
+export default sampleData

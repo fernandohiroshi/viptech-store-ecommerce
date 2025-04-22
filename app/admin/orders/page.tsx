@@ -1,7 +1,11 @@
-import { auth } from "@/auth";
-import DeleteDialog from "@/components/shared/delete-dialog";
-import Pagination from "@/components/shared/pagination";
-import { Button } from "@/components/ui/button";
+import { Metadata } from "next"
+import Link from "next/link"
+
+import { auth } from "@/auth"
+
+import DeleteDialog from "@/components/shared/delete-dialog"
+import Pagination from "@/components/shared/pagination"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -9,32 +13,30 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { deleteOrder, getAllOrders } from "@/lib/actions/order.actions";
-import { requireAdmin } from "@/lib/auth-guard";
-import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
-import { Metadata } from "next";
-import Link from "next/link";
+} from "@/components/ui/table"
+
+import { deleteOrder, getAllOrders } from "@/lib/actions/order.actions"
+import { requireAdmin } from "@/lib/auth-guard"
+import { formatCurrency, formatDateTime, formatId } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Admin Orders",
-};
+}
 
 const AdminOrdersPage = async (props: {
-  searchParams: Promise<{ page: string; query: string }>;
+  searchParams: Promise<{ page: string; query: string }>
 }) => {
-  await requireAdmin();
-  const { page = "1", query: searchText } = await props.searchParams;
+  await requireAdmin()
+  const { page = "1", query: searchText } = await props.searchParams
 
-  const session = await auth();
+  const session = await auth()
 
-  if (session?.user?.role !== "admin")
-    throw new Error("User is not authorized");
+  if (session?.user?.role !== "admin") throw new Error("User is not authorized")
 
   const orders = await getAllOrders({
     page: Number(page),
     query: searchText,
-  });
+  })
 
   return (
     <div className="space-y-2">
@@ -101,7 +103,7 @@ const AdminOrdersPage = async (props: {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminOrdersPage;
+export default AdminOrdersPage

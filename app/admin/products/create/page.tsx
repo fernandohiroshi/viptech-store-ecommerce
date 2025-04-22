@@ -1,9 +1,10 @@
-import ProductForm from "@/components/admin/product-form";
-import { Metadata } from "next";
+import { Metadata } from "next"
+
+import ProductForm from "@/components/admin/product-form"
 
 export const metadata: Metadata = {
   title: "Create Product",
-};
+}
 
 const CreateProductPage = () => {
   return (
@@ -13,7 +14,7 @@ const CreateProductPage = () => {
         <ProductForm type="Create" />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default CreateProductPage;
+export default CreateProductPage

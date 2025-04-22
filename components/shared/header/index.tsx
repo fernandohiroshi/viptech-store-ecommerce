@@ -1,9 +1,11 @@
-import { APP_NAME } from "@/lib/constants";
-import Image from "next/image";
-import Link from "next/link";
-import Menu from "./menu";
-import CategoryDrawer from "./category-drawer";
-import Search from "./search";
+import Image from "next/image"
+import Link from "next/link"
+
+import { APP_NAME } from "@/lib/constants"
+
+import CategoryDrawer from "./category-drawer"
+import Menu from "./menu"
+import Search from "./search"
 
 const Header = () => {
   return (
@@ -18,9 +20,9 @@ const Header = () => {
               height={40}
               width={40}
               priority={true}
-              className="hover:scale-110 duration-500 ease-in-out opacity-90 hover:brightness-110"
+              className="opacity-90 duration-500 ease-in-out hover:scale-110 hover:brightness-110"
             />
-            <span className="font-bold text-xl md:text-2xl ml-2">VTstore</span>
+            <span className="ml-2 text-xl font-bold md:text-2xl">VTstore</span>
           </Link>
         </div>
         <div className="hidden md:block">
@@ -29,7 +31,7 @@ const Header = () => {
         <Menu />
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

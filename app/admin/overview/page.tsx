@@ -1,7 +1,11 @@
-import { Metadata } from "next";
-import { auth } from "@/auth";
-import { requireAdmin } from "@/lib/auth-guard";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BadgeDollarSign, Barcode, CreditCard, Users } from "lucide-react"
+import { Metadata } from "next"
+import Link from "next/link"
+
+import { auth } from "@/auth"
+
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Table,
   TableBody,
@@ -9,27 +13,27 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { getOrderSummary } from "@/lib/actions/order.actions";
-import { formatCurrency, formatDateTime, formatNumber } from "@/lib/utils";
-import { BadgeDollarSign, Barcode, CreditCard, Users } from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import Charts from "./charts";
+} from "@/components/ui/table"
+
+import { getOrderSummary } from "@/lib/actions/order.actions"
+import { requireAdmin } from "@/lib/auth-guard"
+import { formatCurrency, formatDateTime, formatNumber } from "@/lib/utils"
+
+import Charts from "./charts"
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
-};
+}
 
 const AdminOverviewPage = async () => {
-  await requireAdmin();
-  const session = await auth();
+  await requireAdmin()
+  const session = await auth()
 
   if (session?.user?.role !== "admin") {
-    throw new Error("User is not authorized");
+    throw new Error("User is not authorized")
   }
 
-  const summary = await getOrderSummary();
+  const summary = await getOrderSummary()
 
   return (
     <div className="space-y-2">
@@ -90,7 +94,7 @@ const AdminOverviewPage = async () => {
         </Card>
       </div>
 
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
         {/* Overview */}
         <Card className="col-span-3">
           <CardHeader>
@@ -151,7 +155,7 @@ const AdminOverviewPage = async () => {
         </Card>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminOverviewPage;
+export default AdminOverviewPage

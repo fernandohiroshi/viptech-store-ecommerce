@@ -11,11 +11,14 @@ import {
   Section,
   Tailwind,
   Text,
-} from "@react-email/components";
-import { Order } from "@/types";
-import { formatCurrency } from "@/lib/utils";
-import sampleData from "@/db/sample-data";
-require("dotenv").config();
+} from "@react-email/components"
+
+import sampleData from "@/db/sample-data"
+import { Order } from "@/types"
+
+import { formatCurrency } from "@/lib/utils"
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require("dotenv").config()
 
 PurchaseReceiptEmail.PreviewProps = {
   order: {
@@ -58,13 +61,13 @@ PurchaseReceiptEmail.PreviewProps = {
       email_address: "test@test.com",
     },
   },
-} satisfies OrderInformationProps;
+} satisfies OrderInformationProps
 
-const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium" });
+const dateFormatter = new Intl.DateTimeFormat("en", { dateStyle: "medium" })
 
 type OrderInformationProps = {
-  order: Order;
-};
+  order: Order
+}
 
 export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
   return (
@@ -72,39 +75,39 @@ export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
       <Preview>View order receipt</Preview>
       <Tailwind>
         <Head />
-        <Body className="font-sans bg-white">
+        <Body className="bg-white font-sans">
           <Container className="max-w-xl">
             <Heading>Purchase Receipt</Heading>
             <Section>
               <Row>
                 <Column>
-                  <Text className="mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap">
+                  <Text className="mr-4 mb-0 text-nowrap whitespace-nowrap text-gray-500">
                     Order ID
                   </Text>
-                  <Text className="mb-0 mr-4">{order.id.toString()}</Text>
+                  <Text className="mr-4 mb-0">{order.id.toString()}</Text>
                 </Column>
 
                 <Column>
-                  <Text className="mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap">
+                  <Text className="mr-4 mb-0 text-nowrap whitespace-nowrap text-gray-500">
                     Purchase Date
                   </Text>
-                  <Text className="mb-0 mr-4">
+                  <Text className="mr-4 mb-0">
                     {dateFormatter.format(order.createdAt)}
                   </Text>
                 </Column>
 
                 <Column>
-                  <Text className="mb-0 mr-4 text-gray-500 whitespace-nowrap text-nowrap">
+                  <Text className="mr-4 mb-0 text-nowrap whitespace-nowrap text-gray-500">
                     Price Paid
                   </Text>
-                  <Text className="mb-0 mr-4">
+                  <Text className="mr-4 mb-0">
                     {formatCurrency(order.totalPrice)}
                   </Text>
                 </Column>
               </Row>
             </Section>
 
-            <Section className="border border-solid border-gray-500 rounded-lg p-4 md:p-6">
+            <Section className="rounded-lg border border-solid border-gray-500 p-4 md:p-6">
               {order.orderitems.map((item) => (
                 <Row key={item.productId} className="mt-8">
                   <Column className="w-20">
@@ -147,5 +150,5 @@ export default function PurchaseReceiptEmail({ order }: OrderInformationProps) {
         </Body>
       </Tailwind>
     </Html>
-  );
+  )
 }

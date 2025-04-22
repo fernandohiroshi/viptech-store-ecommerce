@@ -1,47 +1,50 @@
-"use client";
+"use client"
 
-import { useEffect } from "react";
-import { Review } from "@/types";
-import Link from "next/link";
-import { useState } from "react";
-import ReviewForm from "./review-form";
-import { getReviews } from "@/lib/actions/review.actions";
+import { Calendar, User } from "lucide-react"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+
+import { Review } from "@/types"
+
+import Rating from "@/components/shared/product/rating"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Calendar, User } from "lucide-react";
-import { formatDateTime } from "@/lib/utils";
-import Rating from "@/components/shared/product/rating";
+} from "@/components/ui/card"
+
+import { getReviews } from "@/lib/actions/review.actions"
+import { formatDateTime } from "@/lib/utils"
+
+import ReviewForm from "./review-form"
 
 const ReviewList = ({
   userId,
   productId,
   productSlug,
 }: {
-  userId: string;
-  productId: string;
-  productSlug: string;
+  userId: string
+  productId: string
+  productSlug: string
 }) => {
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([])
 
   useEffect(() => {
     const loadReviews = async () => {
-      const res = await getReviews({ productId });
-      setReviews(res.data);
-    };
+      const res = await getReviews({ productId })
+      setReviews(res.data)
+    }
 
-    loadReviews();
-  }, [productId]);
+    loadReviews()
+  }, [productId])
 
   //Reload reviews after created or updated
   const reload = async () => {
-    const res = await getReviews({ productId });
-    setReviews([...res.data]);
-  };
+    const res = await getReviews({ productId })
+    setReviews([...res.data])
+  }
 
   return (
     <div className="space-y-4">
@@ -56,7 +59,7 @@ const ReviewList = ({
         <div>
           Please
           <Link
-            className="text-blue-700 px-2"
+            className="px-2 text-blue-700"
             href={`/sign-in?callbackUrl=/product/${productSlug}`}
           >
             sign in
@@ -74,7 +77,7 @@ const ReviewList = ({
               <CardDescription>{review.description}</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex space-x-4 text-sm text-muted-foreground">
+              <div className="text-muted-foreground flex space-x-4 text-sm">
                 <Rating value={review.rating} />
                 <div className="flex items-center">
                   <User className="mr-1 h-3 w-3" />
@@ -90,7 +93,7 @@ const ReviewList = ({
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ReviewList;
+export default ReviewList

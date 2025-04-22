@@ -1,4 +1,10 @@
-"use client";
+"use client"
+
+import Autoplay from "embla-carousel-autoplay"
+import Image from "next/image"
+import Link from "next/link"
+
+import { Product } from "@/types"
 
 import {
   Carousel,
@@ -6,16 +12,12 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Product } from "@/types";
-import Autoplay from "embla-carousel-autoplay";
-import Image from "next/image";
-import Link from "next/link";
+} from "@/components/ui/carousel"
 
 const ProductCarousel = ({ data }: { data: Product[] }) => {
   return (
     <Carousel
-      className="w-full mb-12"
+      className="mb-12 w-full"
       opts={{
         loop: true,
       }}
@@ -38,10 +40,10 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
                   height="0"
                   width="0"
                   sizes="100vw"
-                  className="w-full h-40 md:h-80 object-cover object-center"
+                  className="h-40 w-full object-cover object-center md:h-80"
                 />
-                <div className="absolute inset-0 flex items-end justify-end p-2 ">
-                  <h2 className="bg-gray-900 bg-opacity-50 text-sm md:text-lg lg:text-xl font-bold px-2 text-white rounded">
+                <div className="absolute inset-0 flex items-end justify-end p-2">
+                  <h2 className="bg-opacity-50 rounded bg-gray-900 px-2 text-sm font-bold text-white md:text-lg lg:text-xl">
                     {product.name}
                   </h2>
                 </div>
@@ -53,7 +55,7 @@ const ProductCarousel = ({ data }: { data: Product[] }) => {
       <CarouselPrevious className="hidden lg:flex" />
       <CarouselNext className="hidden lg:flex" />
     </Carousel>
-  );
-};
+  )
+}
 
-export default ProductCarousel;
+export default ProductCarousel

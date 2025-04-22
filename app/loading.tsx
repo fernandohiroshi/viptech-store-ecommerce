@@ -1,5 +1,6 @@
-import loader from "@/assets/loader.gif";
-import Image from "next/image";
+import Image from "next/image"
+
+import loader from "@/assets/loader.gif"
 
 const LoadingPage = () => {
   return (
@@ -14,7 +15,7 @@ const LoadingPage = () => {
     >
       <Image src={loader} height={300} width={300} alt="Loading ..." />
     </div>
-  );
-};
+  )
+}
 
-export default LoadingPage;
+export default LoadingPage

@@ -1,23 +1,24 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { Input } from "../ui/input";
+import { usePathname, useSearchParams } from "next/navigation"
+import { useState, useEffect } from "react"
+
+import { Input } from "../ui/input"
 
 const AdminSearch = () => {
-  const pathname = usePathname();
+  const pathname = usePathname()
   const formActionUrl = pathname.includes("/admin/orders")
     ? "/admin/orders"
     : pathname.includes("/admin/users")
       ? "/admin/users"
-      : "/admin/products";
+      : "/admin/products"
 
-  const searchParams = useSearchParams();
-  const [queryValue, setQueryValue] = useState(searchParams.get("query") || "");
+  const searchParams = useSearchParams()
+  const [queryValue, setQueryValue] = useState(searchParams.get("query") || "")
 
   useEffect(() => {
-    setQueryValue(searchParams.get("query") || "");
-  }, [searchParams]);
+    setQueryValue(searchParams.get("query") || "")
+  }, [searchParams])
 
   return (
     <form action={formActionUrl} method="GET">
@@ -33,7 +34,7 @@ const AdminSearch = () => {
         Search
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default AdminSearch;
+export default AdminSearch

@@ -1,12 +1,11 @@
-import ProductCard from "@/components/shared/product/product-card";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
-import {
-  getAllProducts,
-  getAllCategories,
-} from "@/lib/actions/product.actions";
-import Link from "next/link";
+import Link from "next/link"
+
+import ProductCard from "@/components/shared/product/product-card"
+import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Separator } from "@/components/ui/separator"
+
+import { getAllProducts, getAllCategories } from "@/lib/actions/product.actions"
 
 const prices = [
   {
@@ -29,32 +28,31 @@ const prices = [
     name: "$2001 to $5000",
     value: "2001-5000",
   },
-];
+]
 
-const ratings = [4, 3, 2, 1];
+const ratings = [4, 3, 2, 1]
 
-const sortOrders = ["newest", "lowest", "highest", "rating"];
+const sortOrders = ["newest", "lowest", "highest", "rating"]
 
 export async function generateMetadata(props: {
   searchParams: Promise<{
-    q: string;
-    category: string;
-    price: string;
-    rating: string;
-  }>;
+    q: string
+    category: string
+    price: string
+    rating: string
+  }>
 }) {
   const {
     q = "all",
     category = "all",
     price = "all",
     rating = "all",
-  } = await props.searchParams;
+  } = await props.searchParams
 
-  const isQuerySet = q && q !== "all" && q.trim() !== "";
-  const isCategorySet =
-    category && category !== "all" && category.trim() !== "";
-  const isPriceSet = price && price !== "all" && price.trim() !== "";
-  const isRatingSet = rating && rating !== "all" && rating.trim() !== "";
+  const isQuerySet = q && q !== "all" && q.trim() !== ""
+  const isCategorySet = category && category !== "all" && category.trim() !== ""
+  const isPriceSet = price && price !== "all" && price.trim() !== ""
+  const isRatingSet = rating && rating !== "all" && rating.trim() !== ""
 
   if (isQuerySet || isCategorySet || isPriceSet || isRatingSet) {
     return {
@@ -63,23 +61,23 @@ export async function generateMetadata(props: {
       ${isCategorySet ? `: Category ${category}` : ""}
       ${isPriceSet ? `: Price ${price}` : ""}
       ${isRatingSet ? `: Rating ${rating}` : ""}`,
-    };
+    }
   } else {
     return {
       title: "Search Products",
-    };
+    }
   }
 }
 
 const SearchPage = async (props: {
   searchParams: Promise<{
-    q?: string;
-    category?: string;
-    price?: string;
-    rating?: string;
-    sort?: string;
-    page?: string;
-  }>;
+    q?: string
+    category?: string
+    price?: string
+    rating?: string
+    sort?: string
+    page?: string
+  }>
 }) => {
   const {
     q = "all",
@@ -88,7 +86,7 @@ const SearchPage = async (props: {
     rating = "all",
     sort = "newest",
     page = "1",
-  } = await props.searchParams;
+  } = await props.searchParams
 
   // Construct filter url
   const getFilterUrl = ({
@@ -98,22 +96,22 @@ const SearchPage = async (props: {
     r,
     pg,
   }: {
-    c?: string;
-    p?: string;
-    s?: string;
-    r?: string;
-    pg?: string;
+    c?: string
+    p?: string
+    s?: string
+    r?: string
+    pg?: string
   }) => {
-    const params = { q, category, price, rating, sort, page };
+    const params = { q, category, price, rating, sort, page }
 
-    if (c) params.category = c;
-    if (p) params.price = p;
-    if (s) params.sort = s;
-    if (r) params.rating = r;
-    if (pg) params.page = pg;
+    if (c) params.category = c
+    if (p) params.price = p
+    if (s) params.sort = s
+    if (r) params.rating = r
+    if (pg) params.page = pg
 
-    return `/search?${new URLSearchParams(params).toString()}`;
-  };
+    return `/search?${new URLSearchParams(params).toString()}`
+  }
 
   const products = await getAllProducts({
     query: q,
@@ -122,20 +120,20 @@ const SearchPage = async (props: {
     rating,
     sort,
     page: Number(page),
-  });
+  })
 
-  const categories = await getAllCategories();
+  const categories = await getAllCategories()
 
   return (
     <div className="grid md:grid-cols-5 md:gap-5">
-      <div className="filter-links ">
+      <div className="filter-links">
         {/* Categories Links */}
-        <div className="text-xl mb-2 mt-3">Department</div>
+        <div className="mt-3 mb-2 text-xl">Department</div>
         <div>
-          <ScrollArea className="h-48 md:h-72 w-full rounded-md border overflow-y-auto">
+          <ScrollArea className="h-48 w-full overflow-y-auto rounded-md border md:h-72">
             <div className="p-2">
               <Link
-                className={`block text-sm mb-2 ${
+                className={`mb-2 block text-sm ${
                   (category === "all" || category === "") && "font-bold"
                 }`}
                 href={getFilterUrl({ c: "all" })}
@@ -146,7 +144,7 @@ const SearchPage = async (props: {
               {categories.map((x, index) => (
                 <div key={x.category}>
                   <Link
-                    className={`block text-sm mb-2 ${
+                    className={`mb-2 block text-sm ${
                       category === x.category && "font-bold"
                     }`}
                     href={getFilterUrl({ c: x.category })}
@@ -163,7 +161,7 @@ const SearchPage = async (props: {
         </div>
 
         {/* Price Links */}
-        <div className="text-xl mb-2 mt-8">Price</div>
+        <div className="mt-8 mb-2 text-xl">Price</div>
         <div>
           <ul className="space-y-1">
             <li>
@@ -188,7 +186,7 @@ const SearchPage = async (props: {
         </div>
 
         {/* Rating Links */}
-        <div className="text-xl mb-2 mt-8">Customers Ratings</div>
+        <div className="mt-8 mb-2 text-xl">Customers Ratings</div>
         <div>
           <ul className="space-y-1">
             <li>
@@ -214,12 +212,12 @@ const SearchPage = async (props: {
       </div>
 
       <div className="md:col-span-4 md:space-y-4">
-        <div className="flex-between flex-col md:flex-row my-4">
+        <div className="flex-between my-4 flex-col md:flex-row">
           <div className="flex items-center">
-            {q !== "all" && q !== "" && "Query: " + q}
-            {category !== "all" && category !== "" && "Category: " + category}
-            {price !== "all" && " Price: " + price}
-            {rating !== "all" && " Rating: " + rating + " stars & up"}
+            {q !== "all" && q !== "" && `Query: ${q}`}
+            {category !== "all" && category !== "" && `Category: ${category}`}
+            {price !== "all" && ` Price: ${price}`}
+            {rating !== "all" && ` Rating: ${rating} stars & up`}
             &nbsp;
             {(q !== "all" && q !== "") ||
             (category !== "all" && category !== "") ||
@@ -251,7 +249,7 @@ const SearchPage = async (props: {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SearchPage;
+export default SearchPage

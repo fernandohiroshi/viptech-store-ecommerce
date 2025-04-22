@@ -1,20 +1,24 @@
-import { Button } from "@/components/ui/button";
-import ModeToggle from "./mode-toggle";
-import { EllipsisVertical, ShoppingCart, UserIcon } from "lucide-react";
-import Link from "next/link";
+import { EllipsisVertical, ShoppingCart, UserIcon } from "lucide-react"
+import Link from "next/link"
+
+import { auth } from "@/auth"
+
+import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import UserButton from "./user-button";
-import { auth } from "@/auth";
-import { signOutUser } from "@/lib/actions/user.actions";
+} from "@/components/ui/sheet"
+
+import { signOutUser } from "@/lib/actions/user.actions"
+
+import ModeToggle from "./mode-toggle"
+import UserButton from "./user-button"
 
 const Menu = async () => {
-  const session = await auth();
+  const session = await auth()
 
   if (!session) {
     return (
@@ -23,12 +27,12 @@ const Menu = async () => {
           <UserIcon /> Sign In
         </Link>
       </Button>
-    );
+    )
   }
 
   return (
     <div className="flex justify-end gap-3">
-      <nav className="hidden md:flex w-full max-w-xs gap-1">
+      <nav className="hidden w-full max-w-xs gap-1 md:flex">
         <ModeToggle />
         <Button asChild variant="ghost">
           <Link href="/cart">
@@ -49,12 +53,12 @@ const Menu = async () => {
             <SheetTitle>Menu</SheetTitle>
 
             <div className="flex flex-col space-y-1">
-              <div className="text-sm font-medium leading-none">
+              <div className="text-sm leading-none font-medium">
                 {session.user?.name}
               </div>
 
               <div
-                className="text-sm text-muted-foreground leading-none truncate max-w-[200px] cursor-default"
+                className="text-muted-foreground max-w-[200px] cursor-default truncate text-sm leading-none"
                 title={session.user?.email ?? undefined}
               >
                 {session.user?.email}
@@ -93,7 +97,7 @@ const Menu = async () => {
 
             <form action={signOutUser} className="w-full">
               <Button
-                className="w-full py-4 px-2 h-4 justify-center cursor-default"
+                className="h-4 w-full cursor-default justify-center px-2 py-4"
                 variant="default"
               >
                 Sign Out
@@ -103,7 +107,7 @@ const Menu = async () => {
         </Sheet>
       </nav>
     </div>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

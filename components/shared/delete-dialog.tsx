@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useTransition } from "react";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { useState, useTransition } from "react"
+import { toast } from "sonner"
+
+import { Button } from "@/components/ui/button"
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -13,31 +14,31 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "../ui/alert-dialog";
+} from "../ui/alert-dialog"
 
 const DeleteDialog = ({
   id,
   action,
 }: {
-  id: string;
-  action: (id: string) => Promise<{ success: boolean; message: string }>;
+  id: string
+  action: (id: string) => Promise<{ success: boolean; message: string }>
 }) => {
-  const [open, setOpen] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  const [open, setOpen] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
   const handleDeleteClick = () => {
     startTransition(async () => {
-      const res = await action(id);
+      const res = await action(id)
 
       if (!res.success) {
-        toast.error(res.message);
-        return;
+        toast.error(res.message)
+        return
       } else {
-        toast.success(res.message);
-        return;
+        toast.success(res.message)
+        return
       }
-    });
-  };
+    })
+  }
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
@@ -67,7 +68,7 @@ const DeleteDialog = ({
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
-};
+  )
+}
 
-export default DeleteDialog;
+export default DeleteDialog

@@ -1,4 +1,7 @@
-import { Button } from "@/components/ui/button";
+import { Menu } from "lucide-react"
+import Link from "next/link"
+
+import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerClose,
@@ -6,13 +9,12 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer";
-import { getAllCategories } from "@/lib/actions/product.actions";
-import { Menu } from "lucide-react";
-import Link from "next/link";
+} from "@/components/ui/drawer"
+
+import { getAllCategories } from "@/lib/actions/product.actions"
 
 const CategoryDrawer = async () => {
-  const categories = await getAllCategories();
+  const categories = await getAllCategories()
 
   return (
     <Drawer direction="left">
@@ -24,7 +26,7 @@ const CategoryDrawer = async () => {
       <DrawerContent className="w-full max-w-sm">
         <DrawerHeader>
           <DrawerTitle>Select a category</DrawerTitle>
-          <div className="space-y-1 mt-4">
+          <div className="mt-4 space-y-1">
             {categories.map((x) => (
               <Button
                 variant="ghost"
@@ -43,7 +45,7 @@ const CategoryDrawer = async () => {
         </DrawerHeader>
       </DrawerContent>
     </Drawer>
-  );
-};
+  )
+}
 
-export default CategoryDrawer;
+export default CategoryDrawer

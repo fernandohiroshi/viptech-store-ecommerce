@@ -1,14 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Metadata } from "next";
-import Link from "next/link";
+import { Metadata } from "next"
+import Link from "next/link"
+
+import { Button } from "@/components/ui/button"
 
 export const metadata: Metadata = {
   title: "Unauthorized Access",
-};
+}
 
 const Unauthorized = () => {
   return (
-    <div className="container mx-auto flex flex-col items-center justify-center space-y-4 h-[calc(100vh-200px)]">
+    <div className="container mx-auto flex h-[calc(100vh-200px)] flex-col items-center justify-center space-y-4">
       <h1 className="h1-bold text-4xl">Unauthorized Access</h1>
       <p className="text-muted-foreground">
         You do not have permission to access this page
@@ -17,7 +18,7 @@ const Unauthorized = () => {
         <Link href="/">Return Home</Link>
       </Button>
     </div>
-  );
-};
+  )
+}
 
-export default Unauthorized;
+export default Unauthorized

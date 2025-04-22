@@ -1,5 +1,10 @@
-import { Metadata } from "next";
-import { getAllUsers, deleteUser } from "@/lib/actions/user.actions";
+import { Metadata } from "next"
+import Link from "next/link"
+
+import DeleteDialog from "@/components/shared/delete-dialog"
+import Pagination from "@/components/shared/pagination"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -7,30 +12,27 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { formatId } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Pagination from "@/components/shared/pagination";
-import { Badge } from "@/components/ui/badge";
-import DeleteDialog from "@/components/shared/delete-dialog";
+} from "@/components/ui/table"
+
+import { getAllUsers, deleteUser } from "@/lib/actions/user.actions"
+import { formatId } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "Admin Users",
-};
+}
 
 const AdminUsersPage = async (props: {
   searchParams: Promise<{
-    page: string;
-    query: string;
-  }>;
+    page: string
+    query: string
+  }>
 }) => {
-  const { page = "1", query: searchText } = await props.searchParams;
+  const { page = "1", query: searchText } = await props.searchParams
 
   const users = await getAllUsers({
     page: Number(page),
     query: searchText,
-  });
+  })
 
   return (
     <div className="space-y-2">
@@ -90,7 +92,7 @@ const AdminUsersPage = async (props: {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminUsersPage;
+export default AdminUsersPage

@@ -1,7 +1,8 @@
-import Link from "next/link";
-import { getAllProducts, deleteProduct } from "@/lib/actions/product.actions";
-import { formatCurrency, formatId } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import Link from "next/link"
+
+import DeleteDialog from "@/components/shared/delete-dialog"
+import Pagination from "@/components/shared/pagination"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -9,28 +10,29 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import Pagination from "@/components/shared/pagination";
-import DeleteDialog from "@/components/shared/delete-dialog";
+} from "@/components/ui/table"
+
+import { getAllProducts, deleteProduct } from "@/lib/actions/product.actions"
+import { formatCurrency, formatId } from "@/lib/utils"
 
 const AdminProductsPage = async (props: {
   searchParams: Promise<{
-    page: string;
-    query: string;
-    category: string;
-  }>;
+    page: string
+    query: string
+    category: string
+  }>
 }) => {
-  const searchParams = await props.searchParams;
+  const searchParams = await props.searchParams
 
-  const page = Number(searchParams.page) || 1;
-  const searchText = searchParams.query || "";
-  const category = searchParams.category || "";
+  const page = Number(searchParams.page) || 1
+  const searchText = searchParams.query || ""
+  const category = searchParams.category || ""
 
   const products = await getAllProducts({
     query: searchText,
     page,
     category,
-  });
+  })
 
   return (
     <div className="space-y-2">
@@ -88,7 +90,7 @@ const AdminProductsPage = async (props: {
         <Pagination page={page} totalPages={products.totalPages} />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AdminProductsPage;
+export default AdminProductsPage

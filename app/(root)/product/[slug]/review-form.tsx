@@ -1,6 +1,13 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod"
+import { StarIcon } from "lucide-react"
+import { useState } from "react"
+import { SubmitHandler, useForm } from "react-hook-form"
+import { toast } from "sonner"
+import { z } from "zod"
+
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
@@ -8,7 +15,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/components/ui/dialog"
 import {
   Form,
   FormControl,
@@ -16,76 +23,71 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-import { reviewFormDefaultValues } from "@/lib/constants";
-import { insertReviewSchema } from "@/lib/validators";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { StarIcon } from "lucide-react";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
+} from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
+
 import {
   createUpdateReview,
   getReviewByProductId,
-} from "@/lib/actions/review.actions";
-import { toast } from "sonner";
+} from "@/lib/actions/review.actions"
+import { reviewFormDefaultValues } from "@/lib/constants"
+import { insertReviewSchema } from "@/lib/validators"
 
 const ReviewForm = ({
   userId,
   productId,
   onReviewSubmitted,
 }: {
-  userId: string;
-  productId: string;
-  onReviewSubmitted: () => void;
+  userId: string
+  productId: string
+  onReviewSubmitted: () => void
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const form = useForm<z.infer<typeof insertReviewSchema>>({
     resolver: zodResolver(insertReviewSchema),
     defaultValues: reviewFormDefaultValues,
-  });
+  })
 
   // Handle Form Handler
   const handleOpenForm = async () => {
-    form.setValue("productId", productId);
-    form.setValue("userId", userId);
+    form.setValue("productId", productId)
+    form.setValue("userId", userId)
 
-    const review = await getReviewByProductId({ productId });
+    const review = await getReviewByProductId({ productId })
 
     if (review) {
-      form.setValue("title", review.title);
-      form.setValue("description", review.description);
-      form.setValue("rating", review.rating);
+      form.setValue("title", review.title)
+      form.setValue("description", review.description)
+      form.setValue("rating", review.rating)
     }
 
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   // Submit Form Handler
   const onSubmit: SubmitHandler<z.infer<typeof insertReviewSchema>> = async (
     values
   ) => {
-    const res = await createUpdateReview({ ...values, productId });
+    const res = await createUpdateReview({ ...values, productId })
 
     if (!res.success) {
-      toast.error(res.message);
+      toast.error(res.message)
     }
 
-    setOpen(false);
+    setOpen(false)
 
-    onReviewSubmitted();
-    toast.success(res.message);
-  };
+    onReviewSubmitted()
+    toast.success(res.message)
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -154,7 +156,7 @@ const ReviewForm = ({
                             value={(index + 1).toString()}
                             className="hover:bg-accent duration-100"
                           >
-                            <StarIcon className="h-4 w-4 text-amber-500 animate-pulse" />
+                            <StarIcon className="h-4 w-4 animate-pulse text-amber-500" />
                             {index + 1} {"  "}
                           </SelectItem>
                         ))}
@@ -178,7 +180,7 @@ const ReviewForm = ({
         </Form>
       </DialogContent>
     </Dialog>
-  );
-};
+  )
+}
 
-export default ReviewForm;
+export default ReviewForm

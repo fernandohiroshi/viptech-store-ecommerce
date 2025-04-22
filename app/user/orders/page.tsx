@@ -1,7 +1,8 @@
-import { Metadata } from "next";
-import { getMyOrders } from "@/lib/actions/order.actions";
-import { formatCurrency, formatDateTime, formatId } from "@/lib/utils";
-import Link from "next/link";
+import { Metadata } from "next"
+import Link from "next/link"
+
+import Pagination from "@/components/shared/pagination"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -9,22 +10,23 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import Pagination from "@/components/shared/pagination";
+} from "@/components/ui/table"
+
+import { getMyOrders } from "@/lib/actions/order.actions"
+import { formatCurrency, formatDateTime, formatId } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: "My Orders",
-};
+}
 
 const OrdersPage = async (props: {
-  searchParams: Promise<{ page: string }>;
+  searchParams: Promise<{ page: string }>
 }) => {
-  const { page } = await props.searchParams;
+  const { page } = await props.searchParams
 
   const orders = await getMyOrders({
     page: Number(page) || 1,
-  });
+  })
 
   return (
     <div className="space-y-2">
@@ -78,7 +80,7 @@ const OrdersPage = async (props: {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrdersPage;
+export default OrdersPage

@@ -1,13 +1,16 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { useTransition } from "react";
-import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions";
-import { ArrowRight, Loader, Minus, Plus } from "lucide-react";
-import { Cart, CartItem } from "@/types";
-import Link from "next/link";
-import Image from "next/image";
+import { ArrowRight, Loader, Minus, Plus } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useTransition } from "react"
+import { toast } from "sonner"
+
+import { Cart, CartItem } from "@/types"
+
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 import {
   Table,
   TableBody,
@@ -15,13 +18,13 @@ import {
   TableHeader,
   TableRow,
   TableCell,
-} from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { formatCurrency } from "@/lib/utils";
+} from "@/components/ui/table"
+
+import { addItemToCart, removeItemFromCart } from "@/lib/actions/cart.actions"
+import { formatCurrency } from "@/lib/utils"
 
 function AddButton({ item }: { item: CartItem }) {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
   return (
     <Button
       disabled={isPending}
@@ -29,27 +32,27 @@ function AddButton({ item }: { item: CartItem }) {
       type="button"
       onClick={() =>
         startTransition(async () => {
-          const res = await addItemToCart(item);
+          const res = await addItemToCart(item)
 
           if (!res.success) {
-            toast.error(res.message);
+            toast.error(res.message)
           } else {
-            toast.success(res.message);
+            toast.success(res.message)
           }
         })
       }
     >
       {isPending ? (
-        <Loader className="w-4 h-4 animate-spin" />
+        <Loader className="h-4 w-4 animate-spin" />
       ) : (
-        <Plus className="w-4 h-4" />
+        <Plus className="h-4 w-4" />
       )}
     </Button>
-  );
+  )
 }
 
 function RemoveButton({ item }: { item: CartItem }) {
-  const [isPending, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition()
   return (
     <Button
       disabled={isPending}
@@ -57,30 +60,30 @@ function RemoveButton({ item }: { item: CartItem }) {
       type="button"
       onClick={() =>
         startTransition(async () => {
-          const res = await removeItemFromCart(item.productId);
+          const res = await removeItemFromCart(item.productId)
 
           if (!res.success) {
-            toast.message(res.message); // aqui você usava `.message` no original, mantive igual
+            toast.message(res.message) // aqui você usava `.message` no original, mantive igual
           }
         })
       }
     >
       {isPending ? (
-        <Loader className="w-4 h-4 animate-spin" />
+        <Loader className="h-4 w-4 animate-spin" />
       ) : (
-        <Minus className="w-4 h-4" />
+        <Minus className="h-4 w-4" />
       )}
     </Button>
-  );
+  )
 }
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
-  const router = useRouter();
-  const [isPending, startTransition] = useTransition();
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   return (
     <>
-      <h1 className="py-4 h2-bold">Shopping Cart</h1>
+      <h1 className="h2-bold py-4">Shopping Cart</h1>
       {!cart || cart.items.length === 0 ? (
         <div>
           Cart is empty. <Link href="/">Go Shopping</Link>
@@ -126,7 +129,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
           </div>
 
           <Card>
-            <CardContent className="p-4 gap-4">
+            <CardContent className="gap-4 p-4">
               <div className="pb-3 text-xl">
                 Subtotal ({cart.items.reduce((a, c) => a + c.qty, 0)}):{" "}
                 <span className="font-bold">
@@ -141,9 +144,9 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                 }
               >
                 {isPending ? (
-                  <Loader className="w-4 h-4 animate-spin" />
+                  <Loader className="h-4 w-4 animate-spin" />
                 ) : (
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="h-4 w-4" />
                 )}{" "}
                 Proceed to Checkout
               </Button>
@@ -152,7 +155,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CartTable;
+export default CartTable

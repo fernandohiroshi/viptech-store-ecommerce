@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import React from "react"
+
+import { cn } from "@/lib/utils"
 
 const links = [
   {
@@ -14,13 +15,13 @@ const links = [
     title: "Orders",
     href: "/user/orders",
   },
-];
+]
 
 const MainNav = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLElement>) => {
-  const pathname = usePathname();
+  const pathname = usePathname()
   return (
     <nav
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
@@ -31,7 +32,7 @@ const MainNav = ({
           key={item.href}
           href={item.href}
           className={cn(
-            "text-sm transition-colors hover:text-primary",
+            "hover:text-primary text-sm transition-colors",
             pathname.includes(item.href) ? "" : "text-muted-foreground"
           )}
         >
@@ -39,7 +40,7 @@ const MainNav = ({
         </Link>
       ))}
     </nav>
-  );
-};
+  )
+}
 
-export default MainNav;
+export default MainNav

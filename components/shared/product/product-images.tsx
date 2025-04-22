@@ -1,11 +1,12 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { useState } from "react";
+import Image from "next/image"
+import { useState } from "react"
+
+import { cn } from "@/lib/utils"
 
 const ProductImages = ({ images }: { images: string[] }) => {
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(0)
   return (
     <div className="space-y-4">
       <Image
@@ -22,7 +23,7 @@ const ProductImages = ({ images }: { images: string[] }) => {
             key={image}
             onClick={() => setCurrent(index)}
             className={cn(
-              "border mr-2 cursor-pointer hover:border-amber-500",
+              "mr-2 cursor-pointer border hover:border-amber-500",
               current === index && "border-amber-300"
             )}
           >
@@ -31,7 +32,7 @@ const ProductImages = ({ images }: { images: string[] }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductImages;
+export default ProductImages

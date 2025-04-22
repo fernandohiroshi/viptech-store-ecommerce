@@ -56,7 +56,7 @@ VipTech Store is a feature-rich e-commerce platform for technology products. Thi
 
 <img src="/public/images/doc2.png" alt="Vip Tech Store" />
 
-*Admin dashboard showing sales analytics and key performance metrics*
+_Admin dashboard showing sales analytics and key performance metrics_
 
 ## Tech Stack
 
@@ -262,7 +262,7 @@ Each cart modification button (add/remove) has its own independent loading state
 
 <img src="/public/images/doc4.png" alt="Vip Tech Store" />
 
-*Responsive mobile design ensures optimal shopping experience on all devices*
+_Responsive mobile design ensures optimal shopping experience on all devices_
 
 ## Tailwind CSS v4 Notes
 
@@ -282,7 +282,7 @@ Key changes for Tailwind v4:
 
 **All Rights Reserved**
 
-Copyright (c) 2025 Fernando Hiroshi - [GitHub](https://github.com/fernandohiroshi)
+Copyright (c) 2025 Fernando Hiroshi
 
 This source code is provided for viewing and testing purposes only.
 

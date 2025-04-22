@@ -1,8 +1,9 @@
-import { auth } from "@/auth";
-import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { UploadThingError } from "uploadthing/server";
+import { createUploadthing, type FileRouter } from "uploadthing/next"
+import { UploadThingError } from "uploadthing/server"
 
-const f = createUploadthing();
+import { auth } from "@/auth"
+
+const f = createUploadthing()
 
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
@@ -12,14 +13,14 @@ export const ourFileRouter = {
     },
   })
     .middleware(async () => {
-      const session = await auth();
+      const session = await auth()
 
-      if (!session) throw new UploadThingError("Unauthorized");
+      if (!session) throw new UploadThingError("Unauthorized")
 
-      return { userId: session?.user?.id };
+      return { userId: session?.user?.id }
     })
     .onUploadComplete(async ({ metadata }) => {
-      return { uploadedBy: metadata.userId };
+      return { uploadedBy: metadata.userId }
     }),
-} satisfies FileRouter;
-export type OurFileRouter = typeof ourFileRouter;
+} satisfies FileRouter
+export type OurFileRouter = typeof ourFileRouter

@@ -1,20 +1,23 @@
-import { APP_NAME } from "@/lib/constants";
-import Image from "next/image";
-import Link from "next/link";
-import Menu from "@/components/shared/header/menu";
-import MainNav from "./main-nav";
-import AdminSearch from "@/components/admin/admin-search";
+import Image from "next/image"
+import Link from "next/link"
+
+import AdminSearch from "@/components/admin/admin-search"
+import Menu from "@/components/shared/header/menu"
+
+import { APP_NAME } from "@/lib/constants"
+
+import MainNav from "./main-nav"
 
 export default function AdminLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <>
       <div className="flex flex-col">
-        <div className="border-b container mx-auto">
-          <div className="flex items-center h-16 px-4">
+        <div className="container mx-auto border-b">
+          <div className="flex h-16 items-center px-4">
             <Link href="/" className="w-22">
               <Image
                 src="/images/logo.png"
@@ -25,7 +28,7 @@ export default function AdminLayout({
             </Link>
             {/* Main Nav */}
             <MainNav />
-            <div className="ml-auto items-center flex space-x-4">
+            <div className="ml-auto flex items-center space-x-4">
               {/* Search Input */}
               <AdminSearch />
               {/* Menu */}
@@ -34,10 +37,10 @@ export default function AdminLayout({
           </div>
         </div>
 
-        <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto">
+        <div className="container mx-auto flex-1 space-y-4 p-8 pt-6">
           {children}
         </div>
       </div>
     </>
-  );
+  )
 }

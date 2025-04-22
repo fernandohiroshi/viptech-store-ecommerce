@@ -1,37 +1,39 @@
-"use server";
+"use server"
 
-import { prisma } from "@/db/prisma";
-import { convertToPlainObject, formatError } from "../utils";
-import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from "../constants";
-import { revalidatePath } from "next/cache";
-import { insertProductSchema, updateProductSchema } from "../validators";
-import { z } from "zod";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client"
+import { revalidatePath } from "next/cache"
+import { z } from "zod"
+
+import { prisma } from "@/db/prisma"
+
+import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from "../constants"
+import { convertToPlainObject, formatError } from "../utils"
+import { insertProductSchema, updateProductSchema } from "../validators"
 
 // GET latest products
 export async function getLatestProducts() {
   const data = await prisma.product.findMany({
     take: LATEST_PRODUCTS_LIMIT,
     orderBy: { createdAt: "desc" },
-  });
+  })
 
-  return convertToPlainObject(data);
+  return convertToPlainObject(data)
 }
 
 // GET single product by slug
 export async function getProductBySlug(slug: string) {
   return await prisma.product.findFirst({
     where: { slug: slug },
-  });
+  })
 }
 
 // GET single product by ID
 export async function getProductById(productId: string) {
   const data = await prisma.product.findFirst({
     where: { id: productId },
-  });
+  })
 
-  return convertToPlainObject(data);
+  return convertToPlainObject(data)
 }
 
 // Get all products
@@ -44,13 +46,13 @@ export async function getAllProducts({
   rating,
   sort,
 }: {
-  query: string;
-  limit?: number;
-  page: number;
-  category?: string;
-  price?: string;
-  rating?: string;
-  sort?: string;
+  query: string
+  limit?: number
+  page: number
+  category?: string
+  price?: string
+  rating?: string
+  sort?: string
 }) {
   // Query filter
   const queryFilter: Prisma.ProductWhereInput =
@@ -61,10 +63,10 @@ export async function getAllProducts({
             mode: "insensitive",
           } as Prisma.StringFilter,
         }
-      : {};
+      : {}
 
   // Category filter
-  const categoryFilter = category && category !== "all" ? { category } : {};
+  const categoryFilter = category && category !== "all" ? { category } : {}
 
   // Price filter
   const priceFilter: Prisma.ProductWhereInput =
@@ -75,7 +77,7 @@ export async function getAllProducts({
             lte: Number(price.split("-")[1]),
           },
         }
-      : {};
+      : {}
 
   // Rating filter
   const ratingFilter =
@@ -85,7 +87,7 @@ export async function getAllProducts({
             gte: Number(rating),
           },
         }
-      : {};
+      : {}
 
   const data = await prisma.product.findMany({
     where: {
@@ -104,14 +106,14 @@ export async function getAllProducts({
             : { createdAt: "desc" },
     skip: (page - 1) * limit,
     take: limit,
-  });
+  })
 
-  const dataCount = await prisma.product.count();
+  const dataCount = await prisma.product.count()
 
   return {
     data,
     totalPages: Math.ceil(dataCount / limit),
-  };
+  }
 }
 
 // Delete a product
@@ -119,65 +121,65 @@ export async function deleteProduct(id: string) {
   try {
     const productExists = await prisma.product.findFirst({
       where: { id },
-    });
+    })
 
-    if (!productExists) throw new Error("Product not found");
+    if (!productExists) throw new Error("Product not found")
 
     await prisma.product.delete({
       where: { id },
-    });
+    })
 
-    revalidatePath("/admin/products");
+    revalidatePath("/admin/products")
 
     return {
       success: true,
       message: "Product deleted successfully",
-    };
+    }
   } catch (error) {
-    return { success: false, message: formatError(error) };
+    return { success: false, message: formatError(error) }
   }
 }
 
 // Create a product
 export async function createProduct(data: z.infer<typeof insertProductSchema>) {
   try {
-    const product = insertProductSchema.parse(data);
-    await prisma.product.create({ data: product });
+    const product = insertProductSchema.parse(data)
+    await prisma.product.create({ data: product })
 
-    revalidatePath("/admin/products");
+    revalidatePath("/admin/products")
 
     return {
       success: true,
       message: "Product created successfully",
-    };
+    }
   } catch (error) {
-    return { success: false, message: formatError(error) };
+    return { success: false, message: formatError(error) }
   }
 }
 
 // Update a product
 export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
   try {
-    const product = updateProductSchema.parse(data);
+    const product = updateProductSchema.parse(data)
     const productExists = await prisma.product.findFirst({
       where: { id: product.id },
-    });
+    })
 
-    if (!productExists) throw new Error("Product not found");
+    if (!productExists) throw new Error("Product not found")
 
     await prisma.product.update({
       where: { id: product.id },
       data: product,
-    });
+    })
 
-    revalidatePath("/admin/products");
+    revalidatePath("/admin/products")
 
     return {
       success: true,
       message: "Product update successfully",
-    };
+    }
   } catch (error) {
-    return { success: false, message: formatError(error) };
+    return { success: false, message: formatError(error) }
   }
 }
 
@@ -186,9 +188,9 @@ export async function getAllCategories() {
   const data = await prisma.product.groupBy({
     by: ["category"],
     _count: true,
-  });
+  })
 
-  return data;
+  return data
 }
 
 // Get feature products
@@ -197,7 +199,7 @@ export async function getFeaturedProducts() {
     where: { isFeatured: true },
     orderBy: { createdAt: "desc" },
     take: 4,
-  });
+  })
 
-  return convertToPlainObject(data);
+  return convertToPlainObject(data)
 }

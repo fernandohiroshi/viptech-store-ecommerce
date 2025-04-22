@@ -1,16 +1,17 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { Button } from "./ui/button";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
+import Image from "next/image"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
-const TARGET_DATE = new Date("2025-06-20T00:00:00");
+import { Button } from "./ui/button"
+
+const TARGET_DATE = new Date("2025-06-20T00:00:00")
 
 const calculateTimeRemaining = (targetDate: Date) => {
-  const currentTime = new Date();
-  const timeDifference = Math.max(Number(targetDate) - Number(currentTime), 0);
+  const currentTime = new Date()
+  const timeDifference = Math.max(Number(targetDate) - Number(currentTime), 0)
   return {
     days: Math.floor(timeDifference / (1000 * 60 * 60 * 24)),
     hours: Math.floor(
@@ -18,18 +19,18 @@ const calculateTimeRemaining = (targetDate: Date) => {
     ),
     minutes: Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60)),
     seconds: Math.floor((timeDifference % (1000 * 60)) / 1000),
-  };
-};
+  }
+}
 
 const DealCountdown = () => {
-  const [time, setTime] = useState<ReturnType<typeof calculateTimeRemaining>>();
+  const [time, setTime] = useState<ReturnType<typeof calculateTimeRemaining>>()
 
   useEffect(() => {
-    setTime(calculateTimeRemaining(TARGET_DATE));
+    setTime(calculateTimeRemaining(TARGET_DATE))
 
     const timerInterval = setInterval(() => {
-      const newTime = calculateTimeRemaining(TARGET_DATE);
-      setTime(newTime);
+      const newTime = calculateTimeRemaining(TARGET_DATE)
+      setTime(newTime)
 
       if (
         newTime.days === 0 &&
@@ -37,12 +38,12 @@ const DealCountdown = () => {
         newTime.minutes === 0 &&
         newTime.seconds === 0
       ) {
-        clearInterval(timerInterval);
+        clearInterval(timerInterval)
       }
 
-      return () => clearInterval(timerInterval);
-    }, 1000);
-  }, []);
+      return () => clearInterval(timerInterval)
+    }, 1000)
+  }, [])
 
   const FloatingImage = (
     <motion.div
@@ -56,16 +57,16 @@ const DealCountdown = () => {
     >
       <Image src="/images/promo.png" alt="promotion" width={400} height={300} />
     </motion.div>
-  );
+  )
 
   if (!time) {
     return (
-      <section className="grid grid-cols-1 md:grid-cols-2 my-20">
-        <div className="flex flex-col gap-2 justify-center">
+      <section className="my-20 grid grid-cols-1 md:grid-cols-2">
+        <div className="flex flex-col justify-center gap-2">
           <h3 className="text-3xl font-bold">Loading Countdown...</h3>
         </div>
       </section>
-    );
+    )
   }
 
   if (
@@ -75,8 +76,8 @@ const DealCountdown = () => {
     time.seconds === 0
   ) {
     return (
-      <section className="grid grid-cols-1 md:grid-cols-2 my-20">
-        <div className="flex flex-col gap-2 justify-center">
+      <section className="my-20 grid grid-cols-1 md:grid-cols-2">
+        <div className="flex flex-col justify-center gap-2">
           <h3 className="text-3xl font-bold">Deal Has Ended</h3>
           <p>
             This deal is no longer available. Check out our latest promotions!
@@ -90,12 +91,12 @@ const DealCountdown = () => {
         </div>
         {FloatingImage}
       </section>
-    );
+    )
   }
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 my-20">
-      <div className="flex flex-col gap-2 justify-center">
+    <section className="my-20 grid grid-cols-1 md:grid-cols-2">
+      <div className="flex flex-col justify-center gap-2">
         <h3 className="text-3xl font-bold">Limited-Time Offer</h3>
         <p className="text-sm md:text-base">
           Get ready for a shopping experience like never before with our
@@ -109,7 +110,7 @@ const DealCountdown = () => {
           <StatBox label="Minutes" value={time.minutes} />
           <StatBox label="Seconds" value={time.seconds} />
         </ul>
-        <div className="text-end mb-20 md:mb-0">
+        <div className="mb-20 text-end md:mb-0">
           <Button asChild>
             <Link href="/search?category=Limited+Promotion&q=">
               View Products
@@ -119,14 +120,14 @@ const DealCountdown = () => {
       </div>
       {FloatingImage}
     </section>
-  );
-};
+  )
+}
 
 const StatBox = ({ label, value }: { label: string; value: number }) => (
-  <li className="p-4 w-full text-center">
+  <li className="w-full p-4 text-center">
     <p className="text-3xl font-bold">{value}</p>
     <p>{label}</p>
   </li>
-);
+)
 
-export default DealCountdown;
+export default DealCountdown

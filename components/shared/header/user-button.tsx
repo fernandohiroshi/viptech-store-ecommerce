@@ -1,18 +1,21 @@
-import { auth } from "@/auth";
-import { Button } from "@/components/ui/button";
+import { UserIcon } from "lucide-react"
+import Link from "next/link"
+
+import { auth } from "@/auth"
+
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { signOutUser } from "@/lib/actions/user.actions";
-import { UserIcon } from "lucide-react";
-import Link from "next/link";
+} from "@/components/ui/dropdown-menu"
+
+import { signOutUser } from "@/lib/actions/user.actions"
 
 const UserButton = async () => {
-  const session = await auth();
+  const session = await auth()
 
   if (!session) {
     return (
@@ -21,19 +24,19 @@ const UserButton = async () => {
           <UserIcon /> Sign In
         </Link>
       </Button>
-    );
+    )
   }
 
-  const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "U";
+  const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? "U"
 
   return (
-    <div className="flex gap-2 items-center">
+    <div className="flex items-center gap-2">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex items-center">
             <Button
               variant="ghost"
-              className="relative w-8 h-8 rounded-full ml-2 flex items-center justify-center bg-gray-300 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500"
+              className="relative ml-2 flex h-8 w-8 items-center justify-center rounded-full bg-gray-300 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500"
             >
               {firstInitial}
             </Button>
@@ -42,12 +45,12 @@ const UserButton = async () => {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <div className="text-sm font-medium leading-none">
+              <div className="text-sm leading-none font-medium">
                 {session.user?.name}
               </div>
 
               <div
-                className="text-sm text-muted-foreground leading-none truncate max-w-[200px] cursor-default"
+                className="text-muted-foreground max-w-[200px] cursor-default truncate text-sm leading-none"
                 title={session.user?.email ?? undefined}
               >
                 {session.user?.email}
@@ -78,10 +81,10 @@ const UserButton = async () => {
             </DropdownMenuItem>
           )}
 
-          <DropdownMenuItem className="p-0 mb-1">
+          <DropdownMenuItem className="mb-1 p-0">
             <form action={signOutUser} className="w-full">
               <Button
-                className="w-full py-4 px-2 h-4 justify-start cursor-default"
+                className="h-4 w-full cursor-default justify-start px-2 py-4"
                 variant="ghost"
               >
                 Sign Out
@@ -91,7 +94,7 @@ const UserButton = async () => {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  );
-};
+  )
+}
 
-export default UserButton;
+export default UserButton

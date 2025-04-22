@@ -1,9 +1,12 @@
-import Link from "next/link";
-import Image from "next/image";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import ProductPrice from "./product-price";
-import { Product } from "@/types";
-import Rating from "./rating";
+import Image from "next/image"
+import Link from "next/link"
+
+import { Product } from "@/types"
+
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
+
+import ProductPrice from "./product-price"
+import Rating from "./rating"
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -35,7 +38,7 @@ const ProductCard = ({ product }: { product: Product }) => {
         </div>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default ProductCard;
+export default ProductCard
