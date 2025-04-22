@@ -18,6 +18,22 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
   metadataBase: new URL(SERVER_URL),
+  openGraph: {
+    title: "VIPTech Store | Full-Stack E-commerce Project",
+    description:
+      "Full-stack e-commerce built with Next.js, Tailwind CSS, Stripe, Prisma, and PostgreSQL.",
+    url: "https://viptech.store",
+    siteName: "VIPTech Store",
+    images: [
+      {
+        url: `${SERVER_URL}images/doc1.png`,
+        width: 1200,
+        height: 630,
+        alt: "VIPTech Store - Full-Stack E-commerce Project",
+      },
+    ],
+    type: "website",
+  },
 }
 
 export default function RootLayout({
