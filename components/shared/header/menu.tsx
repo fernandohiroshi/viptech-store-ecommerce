@@ -22,17 +22,20 @@ const Menu = async () => {
 
   if (!session) {
     return (
-      <Button asChild>
-        <Link href="/sign-in">
-          <UserIcon /> Sign In
-        </Link>
-      </Button>
+      <div className="flex items-center gap-2">
+        <ModeToggle />
+        <Button asChild>
+          <Link href="/sign-in">
+            <UserIcon /> Sign In
+          </Link>
+        </Button>
+      </div>
     )
   }
 
   return (
     <div className="flex justify-end gap-3">
-      <nav className="hidden w-full max-w-xs gap-1 md:flex">
+      <nav className="hidden w-full max-w-xs gap-1 lg:flex">
         <ModeToggle />
         <Button asChild variant="ghost">
           <Link href="/cart">
@@ -44,7 +47,7 @@ const Menu = async () => {
       </nav>
 
       {/* MOBILE */}
-      <nav className="md:hidden">
+      <nav className="lg:hidden">
         <Sheet>
           <SheetTrigger className="align-middle">
             <EllipsisVertical />

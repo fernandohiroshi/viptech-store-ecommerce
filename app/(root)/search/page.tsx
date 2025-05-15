@@ -6,6 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
 import { getAllProducts, getAllCategories } from "@/lib/actions/product.actions"
+import Pagination from "@/components/shared/pagination"
 
 const prices = [
   {
@@ -113,7 +114,7 @@ const SearchPage = async (props: {
     return `/search?${new URLSearchParams(params).toString()}`
   }
 
-  const products = await getAllProducts({
+  const { data, totalPages } = await getAllProducts({
     query: q,
     category,
     price,
@@ -241,11 +242,14 @@ const SearchPage = async (props: {
             ))}
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {products.data.length === 0 && <div>No products found</div>}
-          {products.data.map((product) => (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {data.length === 0 && <div>No products found</div>}
+          {data.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
+        </div>
+        <div className="mt-4 flex justify-end">
+          <Pagination page={Number(page)} totalPages={totalPages} />
         </div>
       </div>
     </div>
