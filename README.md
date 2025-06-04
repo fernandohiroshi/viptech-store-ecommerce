@@ -31,7 +31,7 @@ A comprehensive e-commerce platform built with Next.js 15, React 19, TypeScript,
 
 ## Overview
 
-VipTech Store is a feature-rich e-commerce platform for technology products. This project demonstrates a modern approach to building e-commerce solutions with the latest web technologies, focusing on performance, user experience, and developer ergonomics.
+VipTech Store is a feature-rich micro e-commerce platform for technology products. This project demonstrates a modern approach to building e-commerce solutions with the latest web technologies, focusing on performance, user experience, and developer ergonomics.
 
 **Live Demo:** [https://viptech.store](https://viptech.store)
 
