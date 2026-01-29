@@ -1,7 +1,7 @@
-"use server"
+OOOOOOOOO"use server"
 
 import { Prisma } from "@prisma/client"
-import { revalidatePath, unstable_cache } from "next/cache"
+import { revalidatePath } from "next/cache"
 import { z } from "zod"
 
 import { prisma } from "@/db/prisma"
@@ -11,20 +11,14 @@ import { convertToPlainObject, formatError } from "../utils"
 import { insertProductSchema, updateProductSchema } from "../validators"
 
 // GET latest products
-export const getLatestProducts = unstable_cache(
-  async () => {
-    const data = await prisma.product.findMany({
-      take: LATEST_PRODUCTS_LIMIT,
-      orderBy: { createdAt: "desc" },
-    })
+export async function getLatestProducts() {
+  const data = await prisma.product.findMany({
+    take: LATEST_PRODUCTS_LIMIT,
+    orderBy: { createdAt: "desc" },
+  })
 
-    return convertToPlainObject(data)
-  },
-  ["latest_products"],
-  {
-    revalidate: 300,
-  }
-)
+  return convertToPlainObject(data)
+}
 
 // GET single product by slug
 export async function getProductBySlug(slug: string) {
@@ -197,35 +191,22 @@ export async function updateProduct(data: z.infer<typeof updateProductSchema>) {
 }
 
 // Get all categories
-export const getAllCategories = unstable_cache(
-  async () => {
-    const data = await prisma.product.groupBy({
-      by: ["category"],
-      _count: true,
-    })
+export async function getAllCategories() {
+  const data = await prisma.product.groupBy({
+    by: ["category"],
+    _count: true,
+  })
 
-    return data
-  },
-  ["all_categories"],
-  {
-    // Ajuste o tempo de revalidação conforme sua necessidade (em segundos)
-    revalidate: 300,
-  }
-)
+  return data
+}
 
 // Get feature products
-export const getFeaturedProducts = unstable_cache(
-  async () => {
-    const data = await prisma.product.findMany({
-      where: { isFeatured: true },
-      orderBy: { createdAt: "desc" },
-      take: 4,
-    })
+export async function getFeaturedProducts() {
+  const data = await prisma.product.findMany({
+    where: { isFeatured: true },
+    orderBy: { createdAt: "desc" },
+    take: 4,
+  })
 
-    return convertToPlainObject(data)
-  },
-  ["featured_products"],
-  {
-    revalidate: 300,
-  }
-)
+  return convertToPlainObject(data)
+}

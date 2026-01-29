@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 
 import { auth } from "@/auth"
+import { unstable_cache } from "next/cache"
 import { prisma } from "@/db/prisma"
 
 import { formatError } from "../utils"
@@ -87,23 +88,29 @@ export async function createUpdateReview(
 }
 
 // Get all reviews for a product
-export async function getReviews({ productId }: { productId: string }) {
-  const data = await prisma.review.findMany({
-    where: { productId: productId },
-    include: {
-      user: {
-        select: {
-          name: true,
+export const getReviews = unstable_cache(
+  async ({ productId }: { productId: string }) => {
+    const data = await prisma.review.findMany({
+      where: { productId },
+      include: {
+        user: {
+          select: {
+            name: true,
+          },
         },
       },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  })
+      orderBy: {
+        createdAt: "desc",
+      },
+    })
 
-  return { data }
-}
+    return { data }
+  },
+  ["product_reviews"],
+  {
+    revalidate: 120,
+  }
+)
 
 // Get a review written by the current user
 export async function getReviewByProductId({
